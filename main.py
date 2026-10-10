@@ -3,9 +3,9 @@
 """
 IMPROVEMENTS TO BE MADE: 
 
-1. Sometimes, the game is crashing on screen orientation change. Debug and find the reason for the random, inconsistent and existing Bug/Issue.
-2. When converting the game to an .apk, upon changing the orientation of the screen, the game resetting back to the main menu/screen. It is also sometimes just straight up crashing, which needs to be looked into as well !
-3. Add a button on main menu/screen to Quit/Close the game.
+1. [FIXED] Sometimes, the game is crashing on screen orientation change. Debug and find the reason for the random, inconsistent and existing Bug/Issue.
+2. [FIXED] When converting the game to an .apk, upon changing the orientation of the screen, the game resetting back to the main menu/screen. It is also sometimes just straight up crashing, which needs to be looked into as well !
+3. [FIXED] Add a button on main menu/screen to Quit/Close the game.
 """
 
 import random
@@ -327,6 +327,9 @@ class Game:
             
             # 3. Scaled up Change Character Button and dropped below the character image
             self.draw_btn('CHANGE CHAR', self.width // 2, self.height // 2 + 150, 220, 70, self.ui_buttons, self.font)
+
+            # 4. Quit button
+            self.draw_btn('QUIT', self.width // 2, self.height // 2 + 230, 220, 70, self.ui_buttons, self.font)
 
             instruct_surf = self.large_font.render("Tap anywhere else to start playing!", True, WHITE)
             instruct_rect = instruct_surf.get_rect(center=(self.width // 2, self.height - 60))

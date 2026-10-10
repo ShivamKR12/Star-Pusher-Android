@@ -55,6 +55,7 @@
 		<activity
 			android:name="org.anvlabs.anvpy.NewActivity"
 			android:exported="true"
+			android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
 			>
 			<intent-filter
 				>
@@ -71,6 +72,7 @@
 		<activity
 			android:name="org.anvlabs.anvpy.NovaActivity"
 			android:exported="true"
+			android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
 			>
 			<intent-filter
 				>
