@@ -55,7 +55,6 @@
 		<activity
 			android:name="org.anvlabs.anvpy.NewActivity"
 			android:exported="true"
-			android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
 			>
 			<intent-filter
 				>
