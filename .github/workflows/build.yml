@@ -3,7 +3,11 @@ name: Build APK
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-android:
@@ -51,3 +55,22 @@ jobs:
       with:
         name: StarPusher-APK
         path: bin/*.apk
+
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: bin/*.apk
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy to itch.io
+      if: startsWith(github.ref, 'refs/tags/v') && env.BUTLER_API_KEY != ''
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: |
+        curl -L -o /tmp/butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+        unzip -q -o /tmp/butler.zip -d /usr/local/bin
+        chmod +x /usr/local/bin/butler
+        butler push bin/*.apk shivamkr12/star-pusher:android
