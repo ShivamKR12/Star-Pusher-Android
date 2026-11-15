@@ -1,0 +1,53 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build for Android
+    runs-on: ubuntu-latest
+    container:
+      image: kivy/buildozer:latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure Git Safe Directory
+      run: |
+        git config --global --add safe.directory "*"
+
+    - name: Setup recipe folder
+      run: |
+        mkdir -p p4a-recipes/pygame-ce
+        cp p4a-recipes/pygame-ce/__init__.py /tmp/recipe_check.py 2>/dev/null || true
+        ls -la p4a-recipes/pygame-ce/
+
+    - name: Verify buildozer.spec
+      run: |
+        ls -la buildozer.spec
+        cat buildozer.spec
+
+    - name: Cache Buildozer and dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          .buildozer
+          ~/.buildozer
+          ~/.gradle
+        key: buildozer-v1-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+        restore-keys: |
+          buildozer-v1-${{ runner.os }}-
+
+    - name: Build with Buildozer
+      run: |
+        yes | buildozer -v android debug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: StarPusher-APK
+        path: bin/*.apk
