@@ -21,8 +21,8 @@ version = 1.0
 # (list) Application requirements
 requirements = python3==3.10.12,hostpython3==3.10.12,pygame
 
-# (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
-orientation = sensorLandscape
+# (str) Supported orientation (one of landscape, portrait or all)
+orientation = landscape
 
 # (bool) Indicate whether the screen should be fullscreen
 fullscreen = 1
